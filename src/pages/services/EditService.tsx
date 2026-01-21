@@ -34,13 +34,13 @@ export function EditService() {
     if (!id) return;
     setLoading(true);
     try {
-      // If image is string (existing url), don't include it in update if backend handles it
+      // If img is string (existing url), don't include it in update if backend handles it
       // or handle logic in createFormData to only include if File.
       // My createFormData handles File instances.
-      // If values.image is string, createFormData will send it as string.
+      // If values.img is string, createFormData will send it as string.
       // Backend might expect file or nothing.
       // Typically update only sends changed fields or all fields.
-      // If image is unchanged string, backend might ignore or error if it expects file.
+      // If img is unchanged string, backend might ignore or error if it expects file.
       // Let's ensure we only send file if it's new, or handle in createFormData logic more strictly if needed.
       // For now, if it's a string, we can likely skip sending it or send it and backend handles.
       // But commonly, multipart/form-data expects file field to be file.

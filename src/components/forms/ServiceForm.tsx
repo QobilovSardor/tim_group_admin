@@ -19,7 +19,7 @@ import { useEffect } from 'react';
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   sub_title: z.string().min(1, 'Subtitle is required'),
-  image: z.union([z.instanceof(File), z.string()]).optional().refine((val) => {
+  img: z.union([z.instanceof(File), z.string()]).optional().refine((val) => {
     // If it's a create form (we don't check initialData here, but we can infer requirement),
     // we strictly need validation logic based on usage.
     // For now, let's make it optional in schema and validate manually or rely on required prop if needed.
@@ -42,7 +42,7 @@ export function ServiceForm({ initialData, onSubmit, loading }: ServiceFormProps
     defaultValues: {
       title: '',
       sub_title: '',
-      image: undefined,
+      img: undefined,
     },
   });
 
@@ -51,7 +51,7 @@ export function ServiceForm({ initialData, onSubmit, loading }: ServiceFormProps
       form.reset({
         title: initialData.title,
         sub_title: initialData.sub_title,
-        image: initialData.image,
+        img: initialData.img,
       });
     }
   }, [initialData, form]);
@@ -96,7 +96,7 @@ export function ServiceForm({ initialData, onSubmit, loading }: ServiceFormProps
 
           <FormField
             control={form.control}
-            name="image"
+            name="img"
             render={({ field: { value, onChange } }) => (
               <FormItem>
                 <FormLabel>Image</FormLabel>
@@ -104,7 +104,7 @@ export function ServiceForm({ initialData, onSubmit, loading }: ServiceFormProps
                   <ImageUpload
                     value={value}
                     onChange={onChange}
-                    error={form.formState.errors.image?.message}
+                    error={form.formState.errors.img?.message}
                     disabled={loading}
                     className="h-full"
                   />

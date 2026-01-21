@@ -58,12 +58,12 @@ export function ServicesList() {
 
   const columns: Column<Service>[] = [
     {
-      key: 'image',
+      key: 'img',
       header: 'Image',
       render: (service) => (
         <div className="h-12 w-20 overflow-hidden rounded-md border bg-gray-50">
           <img
-            src={service.image}
+            src={service.img}
             alt={service.title}
             className="h-full w-full object-cover"
             onError={(e) => {

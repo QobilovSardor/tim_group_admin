@@ -2,10 +2,10 @@
 export const API_CONFIG = {
   BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
   ENDPOINTS: {
-    OUR_SERVICES: '/api/our-services',
-    REVIEWS: '/api/reviews',
-    DISTRIBUTORS: '/api/distributors',
-    OUR_PROJECTS: '/api/our-projects',
+    OUR_SERVICES: '/our-services',
+    REVIEWS: '/reviews',
+    DISTRIBUTORS: '/distributors',
+    OUR_PROJECTS: '/our-projects',
   }
 };
 

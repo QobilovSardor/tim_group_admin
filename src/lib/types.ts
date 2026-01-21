@@ -1,7 +1,7 @@
 // API Response types
 export interface Service {
   id: number;
-  image: string;
+  img: string;
   title: string;
   sub_title: string;
   created_at?: string;
@@ -39,7 +39,7 @@ export interface Project {
 export interface ServiceInput {
   title: string;
   sub_title: string;
-  image?: File;
+  img?: File;
 }
 
 export interface ReviewInput {
