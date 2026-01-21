@@ -10,7 +10,7 @@ import type { Review } from '@/lib/types';
 import type { Column } from '@/components/common/DataTable';
 import { toast } from 'sonner';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ROUTES } from '@/config/constants';
+import { API_CONFIG, ROUTES } from '@/config/constants';
 
 export function ReviewsList() {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -59,17 +59,31 @@ export function ReviewsList() {
     {
       key: 'user_img',
       header: 'User',
-      render: (review) => (
-        <div className="flex items-center gap-3">
-          <Avatar>
-            <AvatarImage src={review.user_img} alt={review.user_name} />
-            <AvatarFallback>{review.user_name.charAt(0)}</AvatarFallback>
-          </Avatar>
-          <span className="font-medium text-gray-900 dark:text-white">
-            {review.user_name}
-          </span>
-        </div>
-      ),
+      render: (review) => {
+        const imageUrl = review.user_img ? (review.user_img.startsWith('http') ? review.user_img : `${API_CONFIG.BASE_URL}${review.user_img}`) : '';
+        const placeholder = `https://ui-avatars.com/api/?name=${encodeURIComponent(review.user_name)}&background=random`;
+
+        return (
+          <div className="flex items-center gap-3">
+            <Avatar>
+              <AvatarImage
+                src={imageUrl || placeholder}
+                alt={review.user_name}
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (target.src !== placeholder) {
+                    target.src = placeholder;
+                  }
+                }}
+              />
+              <AvatarFallback>{review.user_name.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <span className="font-medium text-gray-900 dark:text-white">
+              {review.user_name}
+            </span>
+          </div>
+        );
+      },
     },
     {
       key: 'user_review',

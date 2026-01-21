@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { ImageUpload } from '@/components/common/ImageUpload';
 import { Loader2 } from 'lucide-react';
 import type { Project } from '@/lib/types';
@@ -18,6 +19,7 @@ import { useEffect } from 'react';
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required'),
+  info: z.string().optional(),
   link: z.string().url('Must be a valid URL'),
   img: z.union([z.instanceof(File), z.string()]).optional().refine((val) => !!val, 'Image is required'),
 });
@@ -35,6 +37,7 @@ export function ProjectForm({ initialData, onSubmit, loading }: ProjectFormProps
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: '',
+      info: '',
       link: '',
       img: undefined,
     },
@@ -44,8 +47,9 @@ export function ProjectForm({ initialData, onSubmit, loading }: ProjectFormProps
     if (initialData) {
       form.reset({
         title: initialData.title,
+        info: initialData.info || '',
         link: initialData.link,
-        img: initialData.image,
+        img: initialData.img,
       });
     }
   }, [initialData, form]);
@@ -77,6 +81,23 @@ export function ProjectForm({ initialData, onSubmit, loading }: ProjectFormProps
                   <FormLabel>Project Link</FormLabel>
                   <FormControl>
                     <Input placeholder="https://example.com/project" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="info"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter project description..."
+                      rows={4}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

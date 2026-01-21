@@ -19,7 +19,7 @@ export interface Review {
 
 export interface Distributor {
   id: number;
-  image: string;
+  img: string;
   title: string;
   link: string;
   created_at?: string;
@@ -28,8 +28,9 @@ export interface Distributor {
 
 export interface Project {
   id: number;
-  image: string;
+  img: string;
   title: string;
+  info: string;
   link: string;
   created_at?: string;
   updated_at?: string;
@@ -44,20 +45,21 @@ export interface ServiceInput {
 
 export interface ReviewInput {
   user_name: string;
-  text: string;
-  user_image?: File;
+  user_review: string;
+  user_img?: File;
 }
 
 export interface DistributorInput {
   title: string;
   link: string;
-  image?: File;
+  img?: File;
 }
 
 export interface ProjectInput {
   title: string;
+  info?: string;
   link: string;
-  image?: File;
+  img?: File;
 }
 
 // API Response wrapper

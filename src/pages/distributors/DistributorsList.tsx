@@ -9,7 +9,7 @@ import { distributorsApi } from '@/lib/api';
 import type { Distributor } from '@/lib/types';
 import type { Column } from '@/components/common/DataTable';
 import { toast } from 'sonner';
-import { ROUTES } from '@/config/constants';
+import { API_CONFIG, ROUTES } from '@/config/constants';
 
 export function DistributorsList() {
   const [distributors, setDistributors] = useState<Distributor[]>([]);
@@ -58,18 +58,26 @@ export function DistributorsList() {
     {
       key: 'img',
       header: 'Logo',
-      render: (distributor) => (
-        <div className="h-12 w-20 overflow-hidden rounded-md border bg-white p-1">
-          <img
-            src={distributor.image}
-            alt={distributor.title}
-            className="h-full w-full object-contain"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=No+Logo';
-            }}
-          />
-        </div>
-      ),
+      render: (distributor) => {
+        const imageUrl = distributor.img ? (distributor.img.startsWith('http') ? distributor.img : `${API_CONFIG.BASE_URL}${distributor.img}`) : '';
+        const placeholder = 'https://via.placeholder.com/150?text=No+Logo';
+
+        return (
+          <div className="h-12 w-20 overflow-hidden rounded-md border bg-white p-1">
+            <img
+              src={imageUrl || placeholder}
+              alt={distributor.title}
+              className="h-full w-full object-contain"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (target.src !== placeholder) {
+                  target.src = placeholder;
+                }
+              }}
+            />
+          </div>
+        );
+      },
     },
     {
       key: 'title',

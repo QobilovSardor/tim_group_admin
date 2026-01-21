@@ -14,6 +14,7 @@ export function CreateProject() {
     try {
       const formData = new FormData();
       formData.append('title', values.title);
+      formData.append('info', values.info || '');
       formData.append('link', values.link);
       if (values.img instanceof File) {
         formData.append('img', values.img);

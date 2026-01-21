@@ -18,7 +18,8 @@ export function EditDistributor() {
     async function fetchDistributor() {
       if (!id) return;
       try {
-        const { data } = await distributorsApi.getById(Number(id));
+        const response = await distributorsApi.getById(Number(id));
+        const data = (response.data as any).data || response.data;
         setDistributor(data);
       } catch (error) {
         toast.error('Failed to fetch distributor details');

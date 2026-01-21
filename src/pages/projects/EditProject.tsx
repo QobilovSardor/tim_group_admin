@@ -18,7 +18,8 @@ export function EditProject() {
     async function fetchProject() {
       if (!id) return;
       try {
-        const { data } = await projectsApi.getById(Number(id));
+        const response = await projectsApi.getById(Number(id));
+        const data = (response.data as any).data || response.data;
         setProject(data);
       } catch (error) {
         toast.error('Failed to fetch project details');
@@ -36,6 +37,7 @@ export function EditProject() {
     try {
       const formData = new FormData();
       formData.append('title', values.title);
+      formData.append('info', values.info || '');
       formData.append('link', values.link);
       if (values.img instanceof File) {
         formData.append('img', values.img);

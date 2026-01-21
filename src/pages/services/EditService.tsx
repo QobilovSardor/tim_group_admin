@@ -18,7 +18,8 @@ export function EditService() {
     async function fetchService() {
       if (!id) return;
       try {
-        const { data } = await servicesApi.getById(Number(id));
+        const response = await servicesApi.getById(Number(id));
+        const data = (response.data as any).data || response.data;
         setService(data);
       } catch (error) {
         toast.error('Failed to fetch service details');

@@ -3,6 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import { Upload, X, Image as ImageIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { API_CONFIG } from '@/config/constants';
 
 interface ImageUploadProps {
   value?: File | string | null;
@@ -67,7 +68,12 @@ export function ImageUpload({
     setPreview(null);
   };
 
-  const displayPreview = preview || (typeof value === 'string' ? value : null);
+  const getFullUrl = (val: string) => {
+    if (val.startsWith('data:') || val.startsWith('http')) return val;
+    return `${API_CONFIG.BASE_URL}${val}`;
+  };
+
+  const displayPreview = preview || (typeof value === 'string' ? getFullUrl(value) : null);
 
   return (
     <div className={className}>

@@ -9,7 +9,7 @@ import { projectsApi } from '@/lib/api';
 import type { Project } from '@/lib/types';
 import type { Column } from '@/components/common/DataTable';
 import { toast } from 'sonner';
-import { ROUTES } from '@/config/constants';
+import { API_CONFIG, ROUTES } from '@/config/constants';
 
 export function ProjectsList() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -58,18 +58,26 @@ export function ProjectsList() {
     {
       key: 'img',
       header: 'Image',
-      render: (project) => (
-        <div className="h-16 w-24 overflow-hidden rounded-md border bg-gray-50">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="h-full w-full object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=No+Image';
-            }}
-          />
-        </div>
-      ),
+      render: (project) => {
+        const imageUrl = project.img ? (project.img.startsWith('http') ? project.img : `${API_CONFIG.BASE_URL}${project.img}`) : '';
+        const placeholder = 'https://via.placeholder.com/150?text=No+Image';
+
+        return (
+          <div className="h-16 w-24 overflow-hidden rounded-md border bg-gray-50">
+            <img
+              src={imageUrl || placeholder}
+              alt={project.title}
+              className="h-full w-full object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (target.src !== placeholder) {
+                  target.src = placeholder;
+                }
+              }}
+            />
+          </div>
+        );
+      },
     },
     {
       key: 'title',
@@ -79,6 +87,13 @@ export function ProjectsList() {
         <span className="font-medium text-gray-900 dark:text-white">
           {project.title}
         </span>
+      ),
+    },
+    {
+      key: 'info',
+      header: 'Description',
+      render: (project) => (
+        <span className="text-gray-500 line-clamp-1">{project.info}</span>
       ),
     },
     {

@@ -45,7 +45,7 @@ export function DistributorForm({ initialData, onSubmit, loading }: DistributorF
       form.reset({
         title: initialData.title,
         link: initialData.link,
-        img: initialData.image,
+        img: initialData.img,
       });
     }
   }, [initialData, form]);

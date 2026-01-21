@@ -9,7 +9,7 @@ import { servicesApi } from '@/lib/api';
 import type { Service } from '@/lib/types';
 import type { Column } from '@/components/common/DataTable';
 import { toast } from 'sonner';
-import { ROUTES } from '@/config/constants';
+import { API_CONFIG, ROUTES } from '@/config/constants';
 
 export function ServicesList() {
   const [services, setServices] = useState<Service[]>([]);
@@ -60,18 +60,26 @@ export function ServicesList() {
     {
       key: 'img',
       header: 'Image',
-      render: (service) => (
-        <div className="h-12 w-20 overflow-hidden rounded-md border bg-gray-50">
-          <img
-            src={service.img}
-            alt={service.title}
-            className="h-full w-full object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=No+Image';
-            }}
-          />
-        </div>
-      ),
+      render: (service) => {
+        const imageUrl = service.img ? (service.img.startsWith('http') ? service.img : `${API_CONFIG.BASE_URL}${service.img}`) : '';
+        const placeholder = 'https://via.placeholder.com/150?text=No+Image';
+
+        return (
+          <div className="h-12 w-20 overflow-hidden rounded-md border bg-gray-50">
+            <img
+              src={imageUrl || placeholder}
+              alt={service.title}
+              className="h-full w-full object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (target.src !== placeholder) {
+                  target.src = placeholder;
+                }
+              }}
+            />
+          </div>
+        );
+      },
     },
     {
       key: 'title',

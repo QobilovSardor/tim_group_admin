@@ -18,7 +18,8 @@ export function EditReview() {
     async function fetchReview() {
       if (!id) return;
       try {
-        const { data } = await reviewsApi.getById(Number(id));
+        const response = await reviewsApi.getById(Number(id));
+        const data = (response.data as any).data || response.data;
         setReview(data);
       } catch (error) {
         toast.error('Failed to fetch review details');
