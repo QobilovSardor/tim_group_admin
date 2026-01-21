@@ -2,6 +2,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Dashboard } from '@/pages/Dashboard';
 import { ROUTES } from '@/config/constants';
+import LoginPage from '@/pages/Login';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import { AuthProvider } from '@/context/AuthContext';
+import { Toaster } from '@/components/ui/sonner';
 
 // Services
 import { ServicesList } from '@/pages/services/ServicesList';
@@ -26,47 +30,74 @@ import { EditProject } from '@/pages/projects/EditProject';
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Redirect root to admin dashboard */}
-        <Route path="/" element={<Navigate to={ROUTES.ADMIN.DASHBOARD} replace />} />
-        <Route path="/admin" element={<Navigate to={ROUTES.ADMIN.DASHBOARD} replace />} />
+      <AuthProvider>
+        <Routes>
+          {/* Public Routes */}
+          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
 
-        {/* Admin Layout Routes */}
-        <Route path="/admin" element={<Layout />}>
-          <Route path="dashboard" element={<Dashboard />} />
+          {/* Protected Root Redirects */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Navigate to={ROUTES.ADMIN.DASHBOARD} replace />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Navigate to={ROUTES.ADMIN.DASHBOARD} replace />
+              </ProtectedRoute>
+            }
+          />
 
-          {/* Services Routes */}
-          <Route path="our-services">
-            <Route index element={<ServicesList />} />
-            <Route path="new" element={<CreateService />} />
-            <Route path=":id/edit" element={<EditService />} />
+          {/* Admin Layout Routes (Protected) */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="dashboard" element={<Dashboard />} />
+
+            {/* Services Routes */}
+            <Route path="our-services">
+              <Route index element={<ServicesList />} />
+              <Route path="new" element={<CreateService />} />
+              <Route path=":id/edit" element={<EditService />} />
+            </Route>
+
+            {/* Reviews Routes */}
+            <Route path="reviews">
+              <Route index element={<ReviewsList />} />
+              <Route path="new" element={<CreateReview />} />
+              <Route path=":id/edit" element={<EditReview />} />
+            </Route>
+
+            {/* Distributors Routes */}
+            <Route path="distributors">
+              <Route index element={<DistributorsList />} />
+              <Route path="new" element={<CreateDistributor />} />
+              <Route path=":id/edit" element={<EditDistributor />} />
+            </Route>
+
+            {/* Projects Routes */}
+            <Route path="our-projects">
+              <Route index element={<ProjectsList />} />
+              <Route path="new" element={<CreateProject />} />
+              <Route path=":id/edit" element={<EditProject />} />
+            </Route>
           </Route>
 
-          {/* Reviews Routes */}
-          <Route path="reviews">
-            <Route index element={<ReviewsList />} />
-            <Route path="new" element={<CreateReview />} />
-            <Route path=":id/edit" element={<EditReview />} />
-          </Route>
-
-          {/* Distributors Routes */}
-          <Route path="distributors">
-            <Route index element={<DistributorsList />} />
-            <Route path="new" element={<CreateDistributor />} />
-            <Route path=":id/edit" element={<EditDistributor />} />
-          </Route>
-
-          {/* Projects Routes */}
-          <Route path="our-projects">
-            <Route index element={<ProjectsList />} />
-            <Route path="new" element={<CreateProject />} />
-            <Route path=":id/edit" element={<EditProject />} />
-          </Route>
-        </Route>
-
-        {/* Catch all - redirect to dashboard */}
-        <Route path="*" element={<Navigate to={ROUTES.ADMIN.DASHBOARD} replace />} />
-      </Routes>
+          {/* Catch all - redirect to dashboard */}
+          <Route path="*" element={<Navigate to={ROUTES.ADMIN.DASHBOARD} replace />} />
+        </Routes>
+        <Toaster position="top-right" richColors />
+      </AuthProvider>
     </BrowserRouter>
   );
 }

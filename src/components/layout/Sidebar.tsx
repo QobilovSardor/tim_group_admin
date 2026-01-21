@@ -41,19 +41,19 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed left-0 top-0 z-50 h-full w-64 transform bg-white border-r border-gray-200 transition-transform duration-200 ease-in-out dark:bg-gray-900 dark:border-gray-800',
+          'fixed left-0 top-0 z-50 h-full w-60 transform bg-white border-r border-gray-100 transition-all duration-300 ease-in-out dark:bg-gray-900 dark:border-gray-800 shadow-sm',
           'lg:translate-x-0 lg:static lg:z-auto',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* Logo */}
-        <div className="flex h-16 items-center justify-between border-b border-gray-200 px-4 dark:border-gray-800">
-          <Link to={ROUTES.ADMIN.DASHBOARD} className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500 text-white font-bold">
+        <div className="flex h-16 items-center justify-between border-b border-gray-100 px-6 dark:border-gray-800">
+          <Link to={ROUTES.ADMIN.DASHBOARD} className="flex items-center gap-2.5 group">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold transition-transform group-hover:scale-105">
               T
             </div>
-            <span className="text-lg font-semibold text-gray-900 dark:text-white">
-              Tim Admin
+            <span className="text-base font-bold tracking-tight text-gray-900 dark:text-white">
+              TIM ADMIN
             </span>
           </Link>
           <Button
@@ -77,10 +77,10 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
                 key={item.name}
                 to={item.href}
                 className={cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                  'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 group',
                   isActive
-                    ? 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white'
+                    ? 'bg-primary/10 text-primary dark:bg-primary/20 shadow-sm'
+                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white'
                 )}
                 onClick={() => {
                   if (window.innerWidth < 1024) {
@@ -89,9 +89,9 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
                 }}
               >
                 <item.icon className={cn(
-                  'h-5 w-5',
-                  isActive ? 'text-cyan-600 dark:text-cyan-400' : ''
-                )} />
+                  'h-4.5 w-4.5 transition-transform group-hover:scale-110',
+                  isActive ? 'text-primary' : 'text-gray-400 group-hover:text-gray-600'
+                )} strokeWidth={isActive ? 2 : 1.5} />
                 {item.name}
               </Link>
             );

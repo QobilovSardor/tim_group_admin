@@ -9,6 +9,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useAuthContext } from '@/context/AuthContext';
+
 
 const breadcrumbMap: Record<string, string> = {
   'admin': 'Admin',
@@ -22,7 +24,9 @@ const breadcrumbMap: Record<string, string> = {
 };
 
 export function Navbar() {
+  const { logout } = useAuthContext();
   const location = useLocation();
+
   const pathSegments = location.pathname.split('/').filter(Boolean);
 
   // Build breadcrumbs
@@ -36,22 +40,22 @@ export function Navbar() {
   });
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-gray-200 bg-white/95 backdrop-blur px-4 lg:px-6 dark:border-gray-800 dark:bg-gray-900/95">
+    <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-gray-100 bg-white/80 backdrop-blur-md px-4 lg:px-6 dark:border-gray-800 dark:bg-gray-950/80">
       {/* Breadcrumbs */}
-      <nav className="flex items-center gap-1 text-sm overflow-x-auto lg:ml-0 ml-12">
+      <nav className="flex items-center gap-2 text-sm overflow-x-auto lg:ml-0 ml-12">
         {breadcrumbs.map((crumb, index) => (
           <div key={crumb.path} className="flex items-center gap-1">
             {index > 0 && (
               <ChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0" />
             )}
             {crumb.isLast ? (
-              <span className="font-medium text-gray-900 dark:text-white whitespace-nowrap">
+              <span className="font-semibold text-gray-900 dark:text-white whitespace-nowrap">
                 {crumb.label}
               </span>
             ) : (
               <Link
                 to={crumb.path}
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 whitespace-nowrap"
+                className="text-gray-400 hover:text-primary transition-colors whitespace-nowrap font-medium"
               >
                 {crumb.label}
               </Link>
@@ -63,21 +67,21 @@ export function Navbar() {
       {/* Right section */}
       <div className="flex items-center gap-2">
         {/* Notifications */}
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5" />
-          <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-cyan-500" />
+        <Button variant="ghost" size="icon" className="relative h-9 w-9 text-gray-400 hover:text-primary transition-colors">
+          <Bell className="h-4.5 w-4.5" />
+          <span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-primary" />
         </Button>
 
         {/* User menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="gap-2 px-2">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-cyan-100 text-cyan-700 text-sm font-medium">
+            <Button variant="ghost" className="gap-2.5 px-1.5 h-9 hover:bg-transparent group">
+              <Avatar className="h-8 w-8 ring-1 ring-gray-100 transition-all group-hover:ring-primary/20">
+                <AvatarFallback className="bg-primary/10 text-primary text-xs font-bold">
                   A
                 </AvatarFallback>
               </Avatar>
-              <span className="hidden md:block text-sm font-medium">Admin</span>
+              <span className="hidden md:block text-sm font-semibold text-gray-700 dark:text-gray-300 group-hover:text-primary transition-colors">Admin</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
@@ -86,9 +90,10 @@ export function Navbar() {
               Profile
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-600">
+            <DropdownMenuItem className="text-red-600 cursor-pointer" onClick={logout}>
               Logout
             </DropdownMenuItem>
+
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

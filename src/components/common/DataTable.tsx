@@ -163,7 +163,7 @@ export function DataTable<T extends { id: number | string }>({
       )}
 
       {/* Table */}
-      <div className="rounded-lg border bg-white dark:bg-gray-900">
+      <div className="rounded-xl border border-gray-100 bg-white shadow-sm dark:bg-gray-950 dark:border-gray-800 overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
@@ -173,14 +173,16 @@ export function DataTable<T extends { id: number | string }>({
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="-ml-3 h-8 hover:bg-transparent"
+                      className="-ml-3 h-8 hover:bg-transparent font-bold text-gray-900 dark:text-white"
                       onClick={() => handleSort(String(col.key))}
                     >
                       {col.header}
-                      <ArrowUpDown className="ml-2 h-4 w-4" />
+                      <ArrowUpDown className="ml-2 h-3.5 w-3.5 opacity-50" />
                     </Button>
                   ) : (
-                    col.header
+                    <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                      {col.header}
+                    </span>
                   )}
                 </TableHead>
               ))}
@@ -191,14 +193,14 @@ export function DataTable<T extends { id: number | string }>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center text-gray-500"
+                  className="h-32 text-center text-gray-400 italic"
                 >
                   {emptyMessage}
                 </TableCell>
               </TableRow>
             ) : (
               paginatedData.map((item) => (
-                <TableRow key={item.id}>
+                <TableRow key={item.id} className="group hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors">
                   {columns.map((col) => (
                     <TableCell key={String(col.key)}>
                       {col.render

@@ -2,6 +2,11 @@
 export const API_CONFIG = {
   BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
   ENDPOINTS: {
+    AUTH: {
+      LOGIN: '/auth/login',
+      REFRESH: '/auth/refresh',
+      CHANGE_PASSWORD: '/auth/change-password',
+    },
     OUR_SERVICES: '/our-services',
     REVIEWS: '/reviews',
     DISTRIBUTORS: '/distributors',
@@ -9,8 +14,23 @@ export const API_CONFIG = {
   }
 };
 
+// Security Configuration
+export const SECURITY_CONFIG = {
+  TOKEN_KEYS: {
+    ACCESS: 'tim_access_token',
+    REFRESH: 'tim_refresh_token',
+    USER: 'tim_user_data',
+    REMEMBER_ME: 'tim_remember_me',
+  },
+  TOKEN_EXPIRY_BUFFER: 5 * 60 * 1000, // 5 minutes in milliseconds
+  MAX_LOGIN_ATTEMPTS: 5,
+  SESSION_TIMEOUT: 30 * 60 * 1000, // 30 minutes in milliseconds
+  IDLE_THRESHOLD: 15 * 60 * 1000, // 15 minutes of inactivity
+};
+
 // Admin Routes
 export const ROUTES = {
+  LOGIN: '/login',
   ADMIN: {
     ROOT: '/admin',
     DASHBOARD: '/admin/dashboard',
