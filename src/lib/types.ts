@@ -36,6 +36,17 @@ export interface Project {
   updated_at?: string;
 }
 
+export interface Translation {
+  id: number;
+  key: string;
+  name_uz: string;
+  name_ru: string;
+  name_kr: string;
+  is_use: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
 // Form input types (for create/update)
 export interface ServiceInput {
   title: string;
@@ -60,6 +71,14 @@ export interface ProjectInput {
   info?: string;
   link: string;
   img?: File;
+}
+
+export interface TranslationInput {
+  key: string;
+  name_uz: string;
+  name_ru: string;
+  name_kr: string;
+  is_use: boolean;
 }
 
 // API Response wrapper

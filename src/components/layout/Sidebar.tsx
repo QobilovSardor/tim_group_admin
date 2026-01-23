@@ -5,6 +5,7 @@ import {
   MessageSquare,
   Building2,
   FolderKanban,
+  Languages,
   ChevronLeft,
   Menu,
 } from 'lucide-react';
@@ -23,6 +24,7 @@ const navigation = [
   { name: 'Reviews', href: ROUTES.ADMIN.REVIEWS, icon: MessageSquare },
   { name: 'Distributors', href: ROUTES.ADMIN.DISTRIBUTORS, icon: Building2 },
   { name: 'Our Projects', href: ROUTES.ADMIN.PROJECTS, icon: FolderKanban },
+  { name: 'Translations', href: ROUTES.ADMIN.TRANSLATIONS, icon: Languages },
 ];
 
 export function Sidebar({ isOpen, onToggle }: SidebarProps) {

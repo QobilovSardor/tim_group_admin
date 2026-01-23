@@ -27,6 +27,11 @@ import { ProjectsList } from '@/pages/projects/ProjectsList';
 import { CreateProject } from '@/pages/projects/CreateProject';
 import { EditProject } from '@/pages/projects/EditProject';
 
+// Translations
+import { TranslationsList } from '@/pages/translations/TranslationsList';
+import { CreateTranslation } from '@/pages/translations/CreateTranslation';
+import { EditTranslation } from '@/pages/translations/EditTranslation';
+
 function App() {
   return (
     <BrowserRouter>
@@ -90,6 +95,13 @@ function App() {
               <Route index element={<ProjectsList />} />
               <Route path="new" element={<CreateProject />} />
               <Route path=":id/edit" element={<EditProject />} />
+            </Route>
+
+            {/* Translations Routes */}
+            <Route path="translations">
+              <Route index element={<TranslationsList />} />
+              <Route path="new" element={<CreateTranslation />} />
+              <Route path=":id/edit" element={<EditTranslation />} />
             </Route>
           </Route>
 

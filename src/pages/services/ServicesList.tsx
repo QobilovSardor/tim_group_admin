@@ -54,8 +54,6 @@ export function ServicesList() {
     }
   };
 
-  console.log(services);
-
   const columns: Column<Service>[] = [
     {
       key: 'img',

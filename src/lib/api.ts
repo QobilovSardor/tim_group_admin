@@ -109,7 +109,7 @@ api.interceptors.response.use(
   }
 );
 
-import type { Service, Review, Distributor, Project } from './types';
+import type { Service, Review, Distributor, Project, Translation, TranslationInput } from './types';
 
 // Services API
 export const servicesApi = {
@@ -161,6 +161,20 @@ export const projectsApi = {
     headers: { 'Content-Type': 'multipart/form-data' },
   }),
   delete: (id: number) => api.delete(`${API_CONFIG.ENDPOINTS.OUR_PROJECTS}/${id}`),
+};
+
+// Translations API
+export const translationsApi = {
+  paginate: (payload: { page: number; limit: number; search?: string }) =>
+    api.post(API_CONFIG.ENDPOINTS.TRANSLATIONS.PAGINATION, payload),
+  getById: (id: number | string) =>
+    api.get<Translation>(`${API_CONFIG.ENDPOINTS.TRANSLATIONS.BASE}/${id}`),
+  create: (data: TranslationInput) =>
+    api.post<Translation>(API_CONFIG.ENDPOINTS.TRANSLATIONS.BASE, data),
+  update: (id: number | string, data: TranslationInput) =>
+    api.put<Translation>(`${API_CONFIG.ENDPOINTS.TRANSLATIONS.BASE}/${id}`, data),
+  delete: (id: number | string) =>
+    api.delete(`${API_CONFIG.ENDPOINTS.TRANSLATIONS.BASE}/${id}`),
 };
 
 // Helper function to create FormData

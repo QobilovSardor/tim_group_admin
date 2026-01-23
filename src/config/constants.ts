@@ -11,6 +11,10 @@ export const API_CONFIG = {
     REVIEWS: '/reviews',
     DISTRIBUTORS: '/distributors',
     OUR_PROJECTS: '/our-projects',
+    TRANSLATIONS: {
+      BASE: '/admin/translation',
+      PAGINATION: '/admin/translation/pagination',
+    },
   }
 };
 
@@ -54,6 +58,11 @@ export const ROUTES = {
     PROJECTS: '/admin/our-projects',
     PROJECTS_NEW: '/admin/our-projects/new',
     PROJECTS_EDIT: (id: string | number) => `/admin/our-projects/${id}/edit`,
+
+    // Translations
+    TRANSLATIONS: '/admin/translations',
+    TRANSLATIONS_NEW: '/admin/translations/new',
+    TRANSLATIONS_EDIT: (id: string | number) => `/admin/translations/${id}/edit`,
   }
 };
 

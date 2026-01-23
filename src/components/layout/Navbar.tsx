@@ -19,6 +19,7 @@ const breadcrumbMap: Record<string, string> = {
   'reviews': 'Reviews',
   'distributors': 'Distributors',
   'our-projects': 'Our Projects',
+  'translations': 'Translations',
   'new': 'Create New',
   'edit': 'Edit',
 };
